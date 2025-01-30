@@ -1,0 +1,44 @@
+services:
+  drupal:
+    image: drupal:latest
+    container_name: drupal
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      - DRUPAL_DATABASE_HOST=db
+      - DRUPAL_DATABASE_NAME=drupal
+      - DRUPAL_DATABASE_USER=drupal
+      - DRUPAL_DATABASE_PASSWORD=drupal
+    volumes:
+      - ./web:/var/www/html
+
+  db:
+    image: mariadb:latest
+    container_name: drupal_db
+    restart: always
+    environment:
+      - MYSQL_DATABASE=drupal
+      - MYSQL_USER=drupal
+      - MYSQL_PASSWORD=drupal
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    volumes:
+      - db-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    environment:
+      - PMA_HOST=db
+      - MYSQL_ROOT_PASSWORD=rootpassword
+
+volumes:
+  drupal-data:
+  db-data:
