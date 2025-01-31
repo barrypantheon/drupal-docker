@@ -1,0 +1,1 @@
+docker exec -i drupal_db mariadb -u drupal -pdrupal drupal < db_dump_file.sql
