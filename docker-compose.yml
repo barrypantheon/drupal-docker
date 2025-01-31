@@ -40,5 +40,4 @@ services:
       - MYSQL_ROOT_PASSWORD=rootpassword
 
 volumes:
-  drupal-data:
   db-data:
